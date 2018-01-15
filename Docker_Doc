@@ -1,0 +1,70 @@
+*** Docker ***
+-----
+Install Docker for ubuntu 16.04
+#. curl -fsSL https://download.docker.com/linux/ubuntu/gpg |  apt-key add - 		//This command will add GPG key 
+#. add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" 		//This will get the latest repo of docker-ce
+#. apt-get update 		//Update the system before you install the docker
+#. apt-cache policy docker-ce 		//To confirm that you are installing docker from repo 
+#. apt-get install -y docker-ce		//Install the docker-ce from your repo
+#. systemctl status docker		//Check the status. Docker will start automatically after installation completed 
+
+
+Image is a like a package ex: Mysql, Httpd etc..
+Container is a Platform which contains the image Ex: Ubuntu with mysql 
+
+After Installing docker 
+#. docker --help
+#. docker run hello-world 	//This will pull the docker container named hello-world
+#. docker rmi -f hello-world 	//This will remove the hello-world image
+#. docker images 		//It will show the images which are downloaded
+#. docker ps -a 		//show the Process of container
+#. docker run -it --name any_name ubuntu bash 		// by --name can give name to the container and -it means interactive mode and this command mainly pulls the 
+ubuntu image and after successfull of this command will be inside the ubuntu machine
+When you are inside the container 
+#. ctrl+P+Q			//To detach from container
+#. docker ps -a 
+#. docker attach docker_name 		//to attach a detached container docker_name ex:any_name
+#. docker-machine ls 		//This will give the docker ip address (url)
+
+
+*** To add the volume to the image ***
+-----
+#. docker run -it --name any_name -rm -v /path/to/our/data/:/anyname ubuntu bash 
+
+*** Docker file and build Command ***
+-----
+Create a docker file named Dockerfile 	//Note "D" is capital from Dockerfile
+Example of Docker file 
+
+FROM ubuntu 			//This thinks base machine is ubuntu
+CMD echo "HELLO WORLD" // CMD Key word tells ubuntu that echo the string Here FROM and CMD are the keywords
+
+
+after adding two lines in Dockerfile build it. 
+#. docker build . 	//Note the dot (.) 
+#. docker build -t any_image_name .    //-t is tag 
+
+After building the Dockerfile successfully It will create the image and run by below command
+#. docker run any_image_name 		//This will echo the String and inside the ubuntu machine and exit
+
+
+*** Docker Create Image and Deploy jar file and run the java application ***
+-----
+https://www.youtube.com/watch?v=FlSup_eelYE   		//Link
+
+1. Create Dockerfile as below
+ 
+ FROM openjdk:8 			//openjdk is required to run the jar file and :8 is the version of the openjdk version you can mention which version you feel comfort https://hub.docker.com
+ ADD /path/to/jar/file.jar 	/tmp/file.jar	// the /path/to/jar/file.jar is the path from your local machine  and /tmp/file.jar is the docker path to store the jar file
+ EXPOSE 9090 			// EXPOSE is a keyword says that run the jar file on port number 9090
+ ENTRYPOINT ["java", "-jar", "/tmp/file.jar"] 		//This will ask docker to run the jar file
+ 
+ 
+ After creating the dockerfile build it 
+ #. docker build -f Dockerfile -t any_name .  	//Building the docker file will create the image named any_name 
+ #. docker run -p 8080:9090 any_name 			// The left side 8080 for our local system and 9090 is for dokcer. Hence binding 9090 port to 8080
+ 
+ 
+ 
+
+

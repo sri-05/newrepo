@@ -1,7 +1,7 @@
 #!/bin/bash
 
 mysqldump -uroot -pPassword1 dbname1 > dbname1`date +"%F:%H:%M:%S"`.sql 2> /dev/null
-sleep 10
+sleep 10 #Wait for 10 Sec
 mysqldump -uroot -pPassword2 dbname2 > dbname2`date +"%F:%H:%M:%S"`.sql 2> /dev/null
 cd /root/Sri/DBBackup/
 sleep 20

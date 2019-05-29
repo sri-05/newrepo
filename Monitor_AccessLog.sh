@@ -3,7 +3,7 @@
 
 IPADDR=192.X.X.10
 
-`rm -rf 503.txt`
+`rnm -rf 503.txt`
 
 tail -n5 /etc/httpd/logs/access_log | awk '{ if($9 == 503) { print $1 } }' > 503.txt
 

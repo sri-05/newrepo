@@ -11,6 +11,7 @@ count=`cat 503.txt | wc -l`
 
 if [ "$count" -ge "4" ]
 then
+
 IP=`cat 503.txt |tail -n1 | awk '{print $1}'`
 
 if [ "$IP" == "$IPADDR" ]
